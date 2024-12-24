@@ -52,3 +52,7 @@ class ScheduleAddress(admin.ModelAdmin):
     search_fields = ('event', 'teacher', 'address')
     ordering = ('pk', )
     empty_value_display = '-'
+
+    @admin.display(description='ФИО')
+    def full_name(self, schedule: Schedule):
+        ...
