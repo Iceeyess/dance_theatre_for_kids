@@ -81,6 +81,3 @@ class Schedule(models.Model):
         verbose_name = 'расписание'
         verbose_name_plural = 'расписания'
 
-    def full_name(self):
-        # return f'{self.teacher.last_name} {self.teacher.first_name[0].upper()} {self.teacher.middle_name[0].upper()}'
-        return f'{self.objects.get(teacher__first_name=self)}'
