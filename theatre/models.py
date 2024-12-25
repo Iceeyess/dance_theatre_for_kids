@@ -1,6 +1,6 @@
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from  django import forms
+from django.db.models import DO_NOTHING
+
 # Create your models here.
 
 
@@ -63,21 +63,53 @@ class Address(models.Model):
         verbose_name = 'адрес'
         verbose_name_plural = 'адреса'
 
+class Weekdays(models.Model):
+    """Класс определения названий дней недели"""
+    day = models.CharField(max_length=30, verbose_name='день недели', help_text='Введите день недели')
 
-class Schedule(models.Model):
-    """Класс-описания модели расписания мероприятия"""
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='наименование мероприятия')
-    date_time = models.DateTimeField(auto_now_add=True, verbose_name='дата и время мероприятия',
+    def __str__(self):
+        return self.day
+
+    class Meta:
+        verbose_name = 'день недели'
+        verbose_name_plural = 'дни недели'
+
+class RegularClassSchedule(models.Model):
+    """Класс-описания модели расписания регулярных занятий с периодически-повторяющимся циклом"""
+    event = models.ForeignKey(Event, on_delete=models.DO_NOTHING, verbose_name='наименование мероприятия')
+    weekdays = models.ManyToManyField(Weekdays, verbose_name='день недели', help_text='Выберите дни недели')
+    time = models.TimeField(verbose_name='время занятий',
+                                     help_text='Введите время занятий')
+    creation_date = models.DateTimeField(auto_now_add=True, verbose_name='дата и время создания')
+    updated_date = models.DateTimeField(auto_now=True, verbose_name='дата и время обновления')
+    teacher = models.ManyToManyField(Teacher, verbose_name='педагог', related_name='teacher_regular_event')
+    address = models.ForeignKey(Address, on_delete=DO_NOTHING, verbose_name='адрес мероприятия')
+
+    def __str__(self):
+        return f'{self.event.name} - {self.time}'
+
+    class Meta:
+        verbose_name = 'расписание регулярного занятия'
+        verbose_name_plural = 'расписание регулярных занятий'
+
+class PlaybillSchedule(models.Model):
+    """Класс-описания модели расписания Грандиозных выступлений на сцене"""
+    event = models.ForeignKey(Event, on_delete=models.DO_NOTHING, verbose_name='наименование мероприятия')
+    date_time = models.DateTimeField(verbose_name='дата и время мероприятия',
                                      help_text='Введите дату и время мероприятия')
     creation_date = models.DateTimeField(auto_now_add=True, verbose_name='дата и время создания')
     updated_date = models.DateTimeField(auto_now=True, verbose_name='дата и время обновления')
-    teacher = models.ManyToManyField(Teacher, verbose_name='педагог')
-    address = models.ManyToManyField(Address, verbose_name='адрес мероприятия')
+    teacher = models.ManyToManyField(Teacher, verbose_name='педагог', related_name='teacher_big_event')
+    address = models.ForeignKey(Address, on_delete=DO_NOTHING, verbose_name='адрес мероприятия')
 
     def __str__(self):
-        return f'{self.event.name} - {self.date_time.strftime("%Y-%m-%d %H:%M")}'
+        return f'{self.event.name} - {self.date_time}'
 
     class Meta:
-        verbose_name = 'расписание'
-        verbose_name_plural = 'расписания'
+        verbose_name = 'расписание большого мероприятия'
+        verbose_name_plural = 'расписание больших мероприятий'
+
+
+
+
 
