@@ -67,11 +67,11 @@ class Address(models.Model):
 class Schedule(models.Model):
     """Класс-описания модели расписания мероприятия"""
     event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='наименование мероприятия')
-    date_time = models.DateTimeField(auto_now_add=True, verbose_name='дата и время мероприятия',
+    date_time = models.DateTimeField(verbose_name='дата и время мероприятия',
                                      help_text='Введите дату и время мероприятия')
     creation_date = models.DateTimeField(auto_now_add=True, verbose_name='дата и время создания')
     updated_date = models.DateTimeField(auto_now=True, verbose_name='дата и время обновления')
-    teacher = models.ManyToManyField(Teacher, verbose_name='педагог')
+    teacher = models.ManyToManyField(Teacher, verbose_name='педагог', related_name='teacher')
     address = models.ManyToManyField(Address, verbose_name='адрес мероприятия')
 
     def __str__(self):

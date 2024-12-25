@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from theatre.models import Teacher, Event, Address, Schedule
 from django.utils.html import format_html
+
 # Register your models here.
 
 
@@ -18,41 +19,47 @@ class AdminTeacher(admin.ModelAdmin):
 
     image_tag.short_description = 'Фото'
     list_display = ('pk', 'last_name', 'first_name', 'middle_name', 'image_tag')
-    list_display_links = ('pk', 'last_name', 'first_name', 'image_tag', )
-    list_filter = ('last_name', )
+    list_display_links = ('pk', 'last_name', 'first_name', 'middle_name', 'image_tag',)
+    list_filter = ('last_name',)
     search_fields = ('last_name', 'first_name', 'middle_name')
-    ordering = ('pk', )
+    ordering = ('pk',)
     empty_value_display = '-'
 
 
 @admin.register(Event)
 class AdminEvent(admin.ModelAdmin):
-    list_display = ('pk', 'name', )
-    list_filter = ('name', )
-    search_fields = ('pk', 'name', )
-    ordering = ('pk', )
+    list_display = ('pk', 'name',)
+    list_filter = ('name',)
+    search_fields = ('pk', 'name',)
+    ordering = ('pk',)
     empty_value_display = '-'
 
 
 @admin.register(Address)
 class AdminAddress(admin.ModelAdmin):
-    list_display = ('pk', 'country', 'post_code', 'district', 'city', 'street', 'house', 'apartment', )
-    list_display_links = ('pk', 'country', 'post_code', 'district', 'city', 'street', 'house', 'apartment', )
-    list_filter = ('city', 'street', )
+    list_display = ('pk', 'country', 'post_code', 'district', 'city', 'street', 'house', 'apartment',)
+    list_display_links = ('pk', 'country', 'post_code', 'district', 'city', 'street', 'house', 'apartment',)
+    list_filter = ('city', 'street',)
     search_fields = ('city', 'street',)
-    ordering = ('pk', )
+    ordering = ('pk',)
     empty_value_display = '-'
 
 
 @admin.register(Schedule)
 class ScheduleAddress(admin.ModelAdmin):
     list_display = ('pk', 'event', 'date_time', 'full_name', )
-    list_display_links = ('pk', 'event', 'date_time', )
+    list_display_links = ('pk', 'event', 'date_time', 'full_name', )
     list_filter = ('event', 'date_time', 'teacher', )
-    search_fields = ('event', 'teacher', 'address')
+    search_fields = ('event', 'teacher', 'address', )
     ordering = ('pk', )
     empty_value_display = '-'
 
-    @admin.display(description='ФИО')
+    @admin.display(description='ФИО преподавателей')
     def full_name(self, schedule: Schedule):
-        ...
+        """Функция отображения ФИО преподавателя в отедльной колонке"""
+        result = list(map(lambda a:
+                                 f'{a.last_name} {a.first_name[0]}.{a.middle_name[0]}.'
+                                 if a.middle_name
+                                 else f'{a.last_name} {a.first_name[0]}.',
+                                 schedule.teacher.all()))
+        return result
