@@ -84,6 +84,7 @@ class RegularClassSchedule(models.Model):
     updated_date = models.DateTimeField(auto_now=True, verbose_name='дата и время обновления')
     teacher = models.ManyToManyField(Teacher, verbose_name='педагог', related_name='teacher_regular_event')
     address = models.ForeignKey(Address, on_delete=DO_NOTHING, verbose_name='адрес мероприятия')
+    picture = models.ImageField(upload_to='regular_event_pict/', verbose_name='Фотка мероприятия', **NULLABLE)
 
     def __str__(self):
         return f'{self.event.name} - {self.time}'
@@ -101,6 +102,7 @@ class PlaybillSchedule(models.Model):
     updated_date = models.DateTimeField(auto_now=True, verbose_name='дата и время обновления')
     teacher = models.ManyToManyField(Teacher, verbose_name='педагог', related_name='teacher_big_event')
     address = models.ForeignKey(Address, on_delete=DO_NOTHING, verbose_name='адрес мероприятия')
+    picture = models.ImageField(upload_to='playbill_event_pict/', verbose_name='Фотка мероприятия', **NULLABLE)
 
     def __str__(self):
         return f'{self.event.name} - {self.date_time}'
