@@ -56,8 +56,8 @@ class AdminAddress(admin.ModelAdmin):
 
 @admin.register(RegularClassSchedule)
 class RegularClassScheduleAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'event', 'days_list', 'time', 'full_name', )
-    list_display_links = ('pk', 'event', 'days_list', 'time', 'full_name', )
+    list_display = ('pk', 'event', 'days_list', 'time', 'full_name', 'picture', )
+    list_display_links = ('pk', 'event', 'days_list', 'time', 'full_name', 'picture',)
     list_filter = ('event', 'time', 'teacher', )
     search_fields = ('event', 'teacher', 'address', )
     ordering = ('pk', )
@@ -82,8 +82,8 @@ class RegularClassScheduleAdmin(admin.ModelAdmin):
 @admin.register(PlaybillSchedule)
 class PlaybillScheduleAdmin(RegularClassScheduleAdmin):
     """Переопределенный класс для больших мероприятий"""
-    list_display = ('pk', 'event', 'date_time', 'full_name', )
-    list_display_links = ('pk', 'event', 'date_time', 'full_name', )
+    list_display = ('pk', 'event', 'date_time', 'full_name', 'picture', )
+    list_display_links = ('pk', 'event', 'date_time', 'full_name', 'picture', )
     list_filter = ('event', 'date_time',  'teacher', )
 
 

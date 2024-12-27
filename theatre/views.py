@@ -3,6 +3,7 @@ import random
 from theatre.models import RegularClassSchedule, PlaybillSchedule
 
 topics = {
+    'main': 'Главная страница',
     'schedule': 'Расписание мероприятий',
     'price': 'Цены',
     'contacts': 'Контакты',
@@ -12,7 +13,8 @@ topics = {
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    header_name = {'header_name': topics['main']}
+    return render(request, 'index.html', context=header_name)
 
 def schedule(request):
     event_1 = RegularClassSchedule.objects.all()

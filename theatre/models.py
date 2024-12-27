@@ -1,3 +1,5 @@
+from tabnanny import verbose
+
 from django.db import models
 from django.db.models import DO_NOTHING
 
@@ -85,9 +87,23 @@ class RegularClassSchedule(models.Model):
     teacher = models.ManyToManyField(Teacher, verbose_name='педагог', related_name='teacher_regular_event')
     address = models.ForeignKey(Address, on_delete=DO_NOTHING, verbose_name='адрес мероприятия')
     picture = models.ImageField(upload_to='regular_event_pict/', verbose_name='Фотка мероприятия', **NULLABLE)
+    price = models.FloatField(default=0, verbose_name='Стоимость', help_text='Введите стоимость услуги')
 
     def __str__(self):
         return f'{self.event.name} - {self.time}'
+
+    @property
+    def weekday_names(self):
+        return ', '.join([weekday.day for weekday in self.weekdays.all()])
+
+    @property
+    def teacher_names(self):
+        result = ', '.join(list(map(lambda a:
+                                 f'{a.last_name} {a.first_name[0]}.{a.middle_name[0]}.'
+                                 if a.middle_name
+                                 else f'{a.last_name} {a.first_name[0]}.',
+                                 self.teacher.all())))
+        return result
 
     class Meta:
         verbose_name = 'расписание регулярного занятия'
@@ -106,6 +122,15 @@ class PlaybillSchedule(models.Model):
 
     def __str__(self):
         return f'{self.event.name} - {self.date_time}'
+
+    @property
+    def teacher_names(self):
+        result = ', '.join(list(map(lambda a:
+                                 f'{a.last_name} {a.first_name[0]}.{a.middle_name[0]}.'
+                                 if a.middle_name
+                                 else f'{a.last_name} {a.first_name[0]}.',
+                                 self.teacher.all())))
+        return result
 
     class Meta:
         verbose_name = 'расписание большого мероприятия'
