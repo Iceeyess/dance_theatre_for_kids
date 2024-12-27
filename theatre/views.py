@@ -1,18 +1,22 @@
 from django.shortcuts import render
 import random
-from theatre.models import RegularClassSchedule, PlaybillSchedule
+from django.views.generic import ListView, DetailView
+from theatre.models import RegularClassSchedule, PlaybillSchedule, Teacher
 
 topics = {
+    'main': 'Главная страница',
     'schedule': 'Расписание мероприятий',
     'price': 'Цены',
     'contacts': 'Контакты',
     'news': 'Новости',
-    'about': 'О нас'
+    'about': 'О нас',
+    'teachers': 'Педагоги'
 }
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    header_name = {'header_name': topics['main']}
+    return render(request, 'index.html', context=header_name)
 
 def schedule(request):
     event_1 = RegularClassSchedule.objects.all()
@@ -21,3 +25,13 @@ def schedule(request):
     random.shuffle(result)
     data = dict(events=result, header_name=topics['schedule'])
     return render(request, 'schedule.html', context=data)
+
+class TeacherListView(ListView):
+    model = Teacher
+    extra_context = {'header_name': topics['teachers']}
+    template_name = 'teacher_list.html'
+
+
+class TeacherDetailView(DetailView):
+    model = Teacher
+    template_name = 'teacher_detail.html'

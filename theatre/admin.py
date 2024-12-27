@@ -56,8 +56,8 @@ class AdminAddress(admin.ModelAdmin):
 
 @admin.register(RegularClassSchedule)
 class RegularClassScheduleAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'event', 'days_list', 'time', 'full_name', )
-    list_display_links = ('pk', 'event', 'days_list', 'time', 'full_name', )
+    list_display = ('pk', 'event', 'days_list', 'time', 'full_name', 'picture', )
+    list_display_links = ('pk', 'event', 'days_list', 'time', 'full_name', 'picture',)
     list_filter = ('event', 'time', 'teacher', )
     search_fields = ('event', 'teacher', 'address', )
     ordering = ('pk', )
@@ -65,7 +65,7 @@ class RegularClassScheduleAdmin(admin.ModelAdmin):
 
     @admin.display(description='ФИО преподавателей')
     def full_name(self, schedule: RegularClassSchedule):
-        """Функция отображения ФИО преподавателя в отедльной колонке"""
+        """Функция отображения ФИО преподавателя в отдельной колонке"""
         result = list(map(lambda a:
                                  f'{a.last_name} {a.first_name[0]}.{a.middle_name[0]}.'
                                  if a.middle_name
@@ -82,8 +82,8 @@ class RegularClassScheduleAdmin(admin.ModelAdmin):
 @admin.register(PlaybillSchedule)
 class PlaybillScheduleAdmin(RegularClassScheduleAdmin):
     """Переопределенный класс для больших мероприятий"""
-    list_display = ('pk', 'event', 'date_time', 'full_name', )
-    list_display_links = ('pk', 'event', 'date_time', 'full_name', )
+    list_display = ('pk', 'event', 'date_time', 'full_name', 'picture', )
+    list_display_links = ('pk', 'event', 'date_time', 'full_name', 'picture', )
     list_filter = ('event', 'date_time',  'teacher', )
 
 

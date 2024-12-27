@@ -10,12 +10,21 @@
         {% for event in events %}
             <div class="col-3">
                 <div class="card" style="width: 18rem;">
+                    {% if event.picture %}
                     <img src="{% get_url_picture event.picture %}" class="card-img-top" alt="...">
+                    {% else %}
+                    <img src="{% static 'photo/system/no_picture.jpg' %}" class="card-img-top" alt="...">
+                    {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и
-                            составлять основную часть содержимого карты.</p>
-                        <a href="#" class="btn btn-dark">Перейти куда-нибудь</a>
+                        <h5 class="card-title">{{ event.event }}</h5>
+                        <p class="card-text">Педагоги:<br>{{ event.teacher_names }}</p>
+                        <p class="card-text">Адрес:<br>{{ event.address }}</p>
+                        {% if event.time %}
+                        <p class="card-text">Расписание:<br>{{ event.weekday_names }} в {{ event.time }}</p>
+                        {% else %}
+                        <p class="card-text">Расписание:<br>{{ event.date_time }}</p>
+                        {% endif %}
+<!--                        <a href="#" class="btn btn-dark">Перейти куда-нибудь</a>-->
                     </div>
                 </div>
             </div>

@@ -81,7 +81,7 @@ class User(AbstractUser, CheckPhone):
     REQUIRED_FIELDS = ['username', 'password']
 
     def __str__(self):
-        return f'Email: {self.email}, Username - {self.username}'
+        return f'Email: {self.email}, Username: {self.username}'
 
     class Meta:
         verbose_name = 'пользователь'
