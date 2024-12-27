@@ -10,7 +10,11 @@
         {% for event in events %}
             <div class="col-3">
                 <div class="card" style="width: 18rem;">
+                    {% if event.picture %}
                     <img src="{% get_url_picture event.picture %}" class="card-img-top" alt="...">
+                    {% else %}
+                    <img src="{% static 'photo/system/no_picture.jpg' %}" class="card-img-top" alt="...">
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">Заголовок карточки</h5>
                         <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и
