@@ -65,7 +65,7 @@ class RegularClassScheduleAdmin(admin.ModelAdmin):
 
     @admin.display(description='ФИО преподавателей')
     def full_name(self, schedule: RegularClassSchedule):
-        """Функция отображения ФИО преподавателя в отедльной колонке"""
+        """Функция отображения ФИО преподавателя в отдельной колонке"""
         result = list(map(lambda a:
                                  f'{a.last_name} {a.first_name[0]}.{a.middle_name[0]}.'
                                  if a.middle_name

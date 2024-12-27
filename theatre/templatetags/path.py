@@ -1,7 +1,7 @@
 from django import template
 from  os.path import join
 
-from config.settings import MEDIA_URL, BASE_DIR, STATIC_URL
+from config.settings import MEDIA_URL
 
 register = template.Library()
 

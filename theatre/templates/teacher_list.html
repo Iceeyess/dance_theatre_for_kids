@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load path %}
+{% block content %}
+
+<!-- Navigation-->
+<!-- Header-->
+<div class="container">
+    <div class="row g-2 padding: 10px">
+        {% for object in object_list %}
+        <div class="col-3">
+            <div class="card" style="width: 18rem;">
+                {% if object.image %}
+                <a href="{% url 'theatre:teachers_detail' object.pk %}"><img src="{% get_url_picture object.image %}" class="card-img-top" alt="{{ object.get_full_name }}"></a>
+                {% else %}
+                <a href="{% url 'theatre:teachers_detail' object.pk %}"><img src="{% static 'photo/system/no_teacher.jpg' %}" class="card-img-top" alt="{{ object.get_full_name }}"></a>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ object.get_full_name }}</h5>
+                    <p class="card-text">Специальность:<br>{{ object.specialty }}</p>
+                    <p class="card-text">Биография:<br>{{ object.biography|slice:30 }}...</p>
+
+                    <!--                        <a href="#" class="btn btn-dark">Перейти куда-нибудь</a>-->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!--</main>-->
+{% endblock %}

@@ -6,28 +6,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                                <li class="nav-item"><a class="nav-link" href="{% url 'theatre:index' %}">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'theatre:index' %}">Главная</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'theatre:schedule' %}">Расписание</a></li>
-                <li class="nav-item"><a class="nav-link" href="pricing.html">Цены</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">О нас</a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                        <li><a class="dropdown-item" href="portfolio-overview.html">Контакты</a></li>
-                        <li><a class="dropdown-item" href="portfolio-item.html">Новости</a></li>
-                        <li><a class="dropdown-item" href="portfolio-item.html">Педагоги</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownRegistrationOrSignIn" href="#"
-                       role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">Войти</a>
-                    <ul class="dropdown-menu dropdown-menu-end"
-                        aria-labelledby="navbarDropdownRegistrationOrSignIn">
-                        <li><a class="dropdown-item" href="portfolio-overview.html">Вход</a></li>
-                        <li><a class="dropdown-item" href="portfolio-item.html">Регистрация</a></li>
-                    </ul>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'theatre:teachers' %}">Педагоги</a></li>
+                <li class="nav-item"><a class="nav-link" href="portfolio-overview.html">Контакты</a></li>
+                <li class="nav-item"><a class="nav-link" href="portfolio-item.html">Новости</a></li>
+                <li class="nav-item"><a class="nav-link" href="pricing.html">О нас</a></li>
+
+            </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownRegistrationOrSignIn" href="#"
+                   role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">Войти</a>
+                <ul class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="navbarDropdownRegistrationOrSignIn">
+                    <li><a class="dropdown-item" href="portfolio-overview.html">Вход</a></li>
+                    <li><a class="dropdown-item" href="portfolio-item.html">Регистрация</a></li>
+                </ul>
+            </li>
             </ul>
 
         </div>
