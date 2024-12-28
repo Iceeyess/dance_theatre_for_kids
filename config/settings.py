@@ -32,7 +32,6 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'theatre',  #main application
-    'users',  #users application
+    'theatre',  # main application
+    'users',  # users application
 ]
 
 MIDDLEWARE = [
@@ -76,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -90,7 +88,6 @@ DATABASES = {
         'PASSWORD': os.getenv('DATABASE_PASSWORD')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -110,7 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -122,7 +118,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -130,7 +125,6 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -141,3 +135,22 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL[1:])
 
 AUTH_USER_MODEL = 'users.User'
+
+# Это для отображения темы в header.html
+topics = {
+    'main': 'Главная страница',
+    'schedule': 'Расписание мероприятий',
+    'teachers': 'Педагоги',
+    'contacts': 'Контакты',
+    'news': 'Новости',
+    'about': 'О нас'
+}
+# Для перебора значений в header.html, чтобы выбрать активный раздел
+# Необходима четкая последовательность с value из вышеуказанного topics, а так же такое же количество топиков
+active_topics = ['Главная страница',
+                 'Расписание мероприятий',
+                 'Педагоги',
+                 'Контакты',
+                 'Новости',
+                 'О нас'
+                 ]

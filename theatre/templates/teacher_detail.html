@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load path %}
+{% block content %}
+
+<!-- Navigation-->
+<!-- Header-->
+
+
+<div class="row featurette">
+    <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Преподаватель: {{ object.get_full_name }}</h2>
+        <p class="text">Специальность:<br>{{ object.specialty }}</p>
+        <p class="lead">Биография:</p>
+        <p class="lead">{{ object.biography }}</p>
+    </div>
+    <div class="col-md-5 order-md-1">
+        {% if object.image %}
+            <img src="{% get_url_picture object.image %}" class="card-img-top" alt="object.get_full_name">
+        {% else %}
+            <img src="{% static 'photo/system/no_teacher.jpg' %}" class="card-img-top" alt="object.get_full_name">
+        {% endif %}
+    </div>
+</div>
+<!--</main>-->
+{% endblock %}

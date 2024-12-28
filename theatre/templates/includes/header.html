@@ -6,25 +6,49 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <!-- Вывод заголовка навигации -->
+                {# Блок навигации, а так же проверки на активные топики #}
+                {% if active_topics.0 == header_name %}
+                <li class="nav-item"><a class="nav-link active" href="{% url 'theatre:index' %}">Главная</a></li>
+                {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'theatre:index' %}">Главная</a></li>
+                {% endif %}
+                {% if active_topics.1 == header_name %}
+                <li class="nav-item"><a class="nav-link active" href="{% url 'theatre:schedule' %}">Расписание</a></li>
+                {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'theatre:schedule' %}">Расписание</a></li>
+                {% endif %}
+                {% if active_topics.2 == header_name %}
+                <li class="nav-item"><a class="nav-link active" href="{% url 'theatre:teachers' %}">Педагоги</a></li>
+                {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'theatre:teachers' %}">Педагоги</a></li>
-                <li class="nav-item"><a class="nav-link" href="portfolio-overview.html">Контакты</a></li>
-                <li class="nav-item"><a class="nav-link" href="portfolio-item.html">Новости</a></li>
-                <li class="nav-item"><a class="nav-link" href="pricing.html">О нас</a></li>
+                {% endif %}
+                {% if active_topics.3 == header_name %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'theatre:contacts' %}">Контакты</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'theatre:contacts' %}">Контакты</a></li>
+                {% endif %}
+                {% if active_topics.4 == header_name %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'theatre:news' %}">Новости</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'theatre:news' %}">Новости</a></li>
+                {% endif %}
+                {% if active_topics.5 == header_name %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'theatre:about' %}">О нас</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'theatre:about' %}">О нас</a></li>
+                {% endif %}
 
-            </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownRegistrationOrSignIn" href="#"
-                   role="button"
-                   data-bs-toggle="dropdown" aria-expanded="false">Войти</a>
-                <ul class="dropdown-menu dropdown-menu-end"
-                    aria-labelledby="navbarDropdownRegistrationOrSignIn">
-                    <li><a class="dropdown-item" href="portfolio-overview.html">Вход</a></li>
-                    <li><a class="dropdown-item" href="portfolio-item.html">Регистрация</a></li>
-                </ul>
-            </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownRegistrationOrSignIn" href="#"
+                       role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">Войти</a>
+                    <ul class="dropdown-menu dropdown-menu-end"
+                        aria-labelledby="navbarDropdownRegistrationOrSignIn">
+                        <li><a class="dropdown-item" href="portfolio-overview.html">Вход</a></li>
+                        <li><a class="dropdown-item" href="portfolio-item.html">Регистрация</a></li>
+                    </ul>
+                </li>
             </ul>
 
         </div>
