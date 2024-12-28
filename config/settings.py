@@ -140,7 +140,7 @@ AUTH_USER_MODEL = 'users.User'
 topics = {
     'main': 'Главная страница',
     'schedule': 'Расписание мероприятий',
-    'image': 'Педагоги',
+    'teachers': 'Педагоги',
     'contacts': 'Контакты',
     'news': 'Новости',
     'about': 'О нас'
