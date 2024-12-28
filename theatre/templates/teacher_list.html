@@ -18,9 +18,8 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ object.get_full_name }}</h5>
                     <p class="card-text">Специальность:<br>{{ object.specialty }}</p>
-                    <p class="card-text">Биография:<br>{{ object.biography|slice:30 }}...</p>
-
-                    <!--                        <a href="#" class="btn btn-dark">Перейти куда-нибудь</a>-->
+                    <p class="card-text">Биография:<br>{{ object.biography|truncatechars:40 }}</p>
+                                            <a href="{% url 'theatre:teachers_detail' object.pk %}" class="btn btn-dark">Подробнее</a>
                 </div>
             </div>
         </div>
