@@ -72,7 +72,7 @@ class User(AbstractUser, CheckPhone):
                                 help_text='Введите имя пользователя')
     avatar = models.ImageField(verbose_name='фотография', help_text='вложите файл с фотографией',
                                upload_to='users/', **NULLABLE)
-    phone = models.CharField(unique=True, verbose_name='телефонный номер',
+    phone = models.CharField(max_length=10, unique=True, verbose_name='телефонный номер',
                                         help_text='Введите номер телефона')
     is_active = models.BooleanField(default=False, verbose_name='статус пользователя',
                                     help_text='Пользователь активен?')
