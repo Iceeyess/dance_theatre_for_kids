@@ -17,7 +17,7 @@ class Teacher(models.Model):
     specialty = models.CharField(max_length=150, verbose_name='специальность',
                                  help_text='Введите специальность', **NULLABLE)
     biography = models.TextField(verbose_name='биография', help_text='Введите биографию', **NULLABLE)
-    image = models.ImageField(upload_to='teachers/', verbose_name='фотография', help_text='введите фото педагога',
+    image = models.ImageField(upload_to='image_teachers/', verbose_name='фотография', help_text='введите фото педагога',
                               **NULLABLE)
 
     def __str__(self):
