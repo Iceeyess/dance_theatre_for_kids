@@ -27,8 +27,8 @@ class AddressOrganization(models.Model):
 class BankAccountOrganization(models.Model):
     """Класс банковских счетов нашей организации"""
     account_number = models.CharField(max_length=20, verbose_name='расчетный счет')
-    bic_code = models.PositiveIntegerField(verbose_name='БИК банка')
-    tin_number = models.PositiveBigIntegerField(verbose_name='ИНН')
+    bic_code = models.CharField(max_length=11, verbose_name='БИК банка')
+    tin_number = models.CharField(max_length=12, verbose_name='ИНН')
     organization = models.ForeignKey('Organization', on_delete=models.SET_NULL, **NULLABLE)
 
     class Meta:
