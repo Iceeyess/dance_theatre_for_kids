@@ -34,8 +34,8 @@ class TeacherDetailView(DetailView):
     model = Teacher
     template_name = 'teacher_detail.html'
 
-def contacts():
-    ...
+def contacts(request):
+    return render(request, 'contact.html')
 
 def news():
     ...

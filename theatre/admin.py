@@ -28,8 +28,8 @@ class AdminTeacher(admin.ModelAdmin):
     image_tag.short_description = 'Фото'
     list_display = ('pk', 'last_name', 'first_name', 'middle_name', 'image_tag')
     list_display_links = ('pk', 'last_name', 'first_name', 'middle_name', 'image_tag',)
-    list_filter = ('last_name',)
-    search_fields = ('last_name', 'first_name', 'middle_name')
+    list_filter = ('last_name', )
+    search_fields = ('last_name', 'first_name', 'middle_name', )
     ordering = ('pk',)
     empty_value_display = '-'
 
