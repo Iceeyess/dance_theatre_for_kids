@@ -28,8 +28,8 @@ class AddressOrganizationAdmin(admin.ModelAdmin):
 @admin.register(BankAccountOrganization)
 class BankAccountOrganizationAdmin(admin.ModelAdmin):
     """Класс с информацией о банке организации"""
-    list_display = ('account_number', 'bic_code', 'tin_number', 'organization', )
-    list_display_links = ('account_number', 'bic_code', 'tin_number', 'organization', )
+    list_display = ('account_number', 'bic_code', 'tin_number', 'organization', 'card_number', )
+    list_display_links = ('account_number', 'bic_code', 'tin_number', 'organization', 'card_number', )
     empty_value_display = '-'
 
 @admin.register(Organization)
@@ -37,3 +37,4 @@ class OrganizationAdmin(admin.ModelAdmin):
     """Класс с информацией об организации"""
     list_display = ('org_name', 'phone', 'address', )
     list_display_links = ('org_name', 'phone', 'address', )
+    empty_value_display = '-'

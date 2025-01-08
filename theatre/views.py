@@ -3,8 +3,8 @@ import random
 from django.views.generic import ListView, DetailView
 
 from config.settings import topics, active_topics
-from theatre.models import RegularClassSchedule, PlaybillSchedule, Teacher
-
+from theatre.models import RegularClassSchedule, PlaybillSchedule, Teacher, Gallery
+from users.models import BankAccountOrganization
 
 
 # Create your views here.
@@ -34,11 +34,17 @@ class TeacherDetailView(DetailView):
     model = Teacher
     template_name = 'teacher_detail.html'
 
-def contacts(request):
-    return render(request, 'contact.html')
+class ContactsListView(ListView):
+    model = BankAccountOrganization
+    template_name = 'contact.html'
+    extra_context = dict(header_name=topics['contacts'], topics=topics, active_topics=active_topics)
 
 def news():
     ...
 
 def about():
     ...
+
+class GalleryListView(ListView):
+    model = Gallery
+    extra_context = dict(header_name=topics['gallery'], topics=topics, active_topics=active_topics)
