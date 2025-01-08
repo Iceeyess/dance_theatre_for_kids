@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from theatre.models import Teacher, Event, Address, Weekdays, RegularClassSchedule, PlaybillSchedule
+from theatre.models import Teacher, Event, Address, Weekdays, RegularClassSchedule, PlaybillSchedule, Gallery
 from django.utils.html import format_html
 
 # Register your models here.
@@ -26,8 +26,8 @@ class AdminTeacher(admin.ModelAdmin):
         return format_html('<img src="{}" style="max-width:100px; max-height:100px"/>'.format(obj.image.url))
 
     image_tag.short_description = 'Фото'
-    list_display = ('pk', 'last_name', 'first_name', 'middle_name', 'image_tag')
-    list_display_links = ('pk', 'last_name', 'first_name', 'middle_name', 'image_tag',)
+    list_display = ('pk', 'last_name', 'first_name', 'middle_name', 'image_tag', )
+    list_display_links = ('pk', 'last_name', 'first_name', 'middle_name', 'image_tag', )
     list_filter = ('last_name', )
     search_fields = ('last_name', 'first_name', 'middle_name', )
     ordering = ('pk',)
@@ -86,5 +86,10 @@ class PlaybillScheduleAdmin(RegularClassScheduleAdmin):
     list_display_links = ('pk', 'event', 'date_time', 'full_name', 'picture', )
     list_filter = ('event', 'date_time',  'teacher', )
 
-
+@admin.register(Gallery)
+class GalleryAdmin(admin.ModelAdmin):
+    """Класс для загрузки фотографий с грандиозных мероприятий"""
+    list_display = ('name', 'event', 'image', )
+    list_display_links = ('name', 'event', 'image', )
+    list_filter = ('event', )
 

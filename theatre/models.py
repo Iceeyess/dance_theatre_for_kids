@@ -143,3 +143,29 @@ class PlaybillSchedule(models.Model):
     class Meta:
         verbose_name = 'расписание большого мероприятия'
         verbose_name_plural = 'расписание больших мероприятий'
+
+
+class News:
+    """Класс новостей"""
+    name = models.CharField(max_length=100, verbose_name='новости', help_text='Введите название новости')
+    description = models.TextField()
+    image = models.ImageField(upload_to='news_images', verbose_name='Аварка новости', help_text='Вставьте аватарку для новости')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'новость'
+        verbose_name_plural = 'новости'
+
+class Gallery(models.Model):
+    name = models.CharField(max_length=150)
+    event =  models.ForeignKey(PlaybillSchedule, on_delete=models.CASCADE, verbose_name='мероприятие')
+    image = models.ImageField(upload_to='image_gallery/', help_text='Вставьте фотографию', verbose_name='Фотография')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'галерея'
+        verbose_name_plural = 'галерея'

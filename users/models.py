@@ -22,13 +22,14 @@ class AddressOrganization(models.Model):
         ordering = ('pk', )
 
     def __str__(self):
-        return f'{self.country} {self.city} {self.street} {self.house} {self.apartment}'
+        return f'{self.country}, {self.city}, {self.street}, {self.house}, {self.apartment}'
 
 class BankAccountOrganization(models.Model):
     """Класс банковских счетов нашей организации"""
-    account_number = models.CharField(max_length=20, verbose_name='расчетный счет')
-    bic_code = models.CharField(max_length=11, verbose_name='БИК банка')
-    tin_number = models.CharField(max_length=12, verbose_name='ИНН')
+    account_number = models.CharField(max_length=20, verbose_name='расчетный счет', help_text='Введите номер счета')
+    bic_code = models.CharField(max_length=11, verbose_name='БИК банка', help_text='Введите БИК банка')
+    tin_number = models.CharField(max_length=12, verbose_name='ИНН', help_text='Введите индивидуальный номер налогоплательщика')
+    card_number = models.CharField(max_length=20, verbose_name='Номер карты', help_text='Введите номер карты')
     organization = models.ForeignKey('Organization', on_delete=models.SET_NULL, **NULLABLE)
 
     class Meta:
@@ -40,10 +41,19 @@ class BankAccountOrganization(models.Model):
         return f'{self.organization}, {self.tin_number}'
 
     def clean(self):
+        """Валидация банковского счета, ИНН, банковской карты"""
         if [True for _ in str(self.account_number) if not _.isdigit()]:
             raise forms.ValidationError('Номер банковского счета должен содержать только цифры в формате \'40702812345678901234\'.')
         if len(str(self.account_number)) < 20:
             raise forms.ValidationError('Номер банковского счета должен состоять из 20 цифр.')
+        if [True for _ in str(self.tin_number) if not _.isdigit()]:
+            raise forms.ValidationError('Номер ИНН должен содержать только цифры в формате 10 или 12 символов \'771234567890\'.')
+        if len(str(self.tin_number)) not in (10, 12):
+            raise forms.ValidationError('Номер ИНН должен состоять из 10 или 12 цифр.')
+        if [True for _ in str(self.card_number) if not _.isdigit()]:
+            raise forms.ValidationError('Номер банковской карты должен содержать только цифры в формате до 20 символов.')
+        if len(str(self.card_number)) > 20:
+            raise forms.ValidationError('Номер банковской карты должен состоять из цифр до 20 символов.')
         return super().clean()
 
 
