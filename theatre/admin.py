@@ -79,17 +79,30 @@ class RegularClassScheduleAdmin(admin.ModelAdmin):
         result = ', '.join(map(lambda a: a.day, schedule.weekdays.all()))
         return result
 
+# @admin.register(PlaybillSchedule)
+# class PlaybillScheduleAdmin(RegularClassScheduleAdmin):
+#     """Переопределенный класс для больших мероприятий"""
+#     list_display = ('pk', 'event', 'date_time', 'full_name', 'picture', )
+#     list_display_links = ('pk', 'event', 'date_time', 'full_name', 'picture', )
+#     list_filter = ('event', 'date_time',  'teacher', )
+
+# @admin.register(Gallery)
+# class GalleryAdmin(admin.ModelAdmin):
+#     """Класс для загрузки фотографий с грандиозных мероприятий"""
+#     list_display = ('event', 'image', )
+#     list_display_links = ('event', 'image', )
+#     list_filter = ('event', )
+
+class GalleryImageAdmin(admin.StackedInline):
+    model = Gallery
+
 @admin.register(PlaybillSchedule)
-class PlaybillScheduleAdmin(RegularClassScheduleAdmin):
-    """Переопределенный класс для больших мероприятий"""
-    list_display = ('pk', 'event', 'date_time', 'full_name', 'picture', )
-    list_display_links = ('pk', 'event', 'date_time', 'full_name', 'picture', )
-    list_filter = ('event', 'date_time',  'teacher', )
+class GalleryAdmin(admin.ModelAdmin):
+    inlines = [GalleryImageAdmin, ]
+
+    class Meta:
+        model = PlaybillSchedule
 
 @admin.register(Gallery)
 class GalleryAdmin(admin.ModelAdmin):
-    """Класс для загрузки фотографий с грандиозных мероприятий"""
-    list_display = ('name', 'event', 'image', )
-    list_display_links = ('name', 'event', 'image', )
-    list_filter = ('event', )
-
+    pass

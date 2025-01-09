@@ -159,12 +159,13 @@ class News:
         verbose_name_plural = 'новости'
 
 class Gallery(models.Model):
-    name = models.CharField(max_length=150)
-    event =  models.ForeignKey(PlaybillSchedule, on_delete=models.CASCADE, verbose_name='мероприятие')
+    event =  models.ForeignKey(PlaybillSchedule, on_delete=models.CASCADE, verbose_name='мероприятие', related_name='gallery')
     image = models.ImageField(upload_to='image_gallery/', help_text='Вставьте фотографию', verbose_name='Фотография')
+    mark_deletion = models.BooleanField(default=False)
+
 
     def __str__(self):
-        return self.name
+        return self.event
 
     class Meta:
         verbose_name = 'галерея'

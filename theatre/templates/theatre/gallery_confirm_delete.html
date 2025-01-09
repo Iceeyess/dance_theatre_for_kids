@@ -1,0 +1,38 @@
+{% extends 'theatre/base.html' %}
+{% load static %}
+{% load path %}
+{% block content %}
+<div class="container">
+    <div class="row g-2 padding: 10px">
+        <table class="table-light">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Фотография</th>
+                <th scope="col">Название файла и путь</th>
+                <th scope="col">Удалить</th>
+                <th scope="col">Восстановить</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for photo in photos %}
+            <tr class="table-light">
+                <th scope="row">{{ photo.pk }}</th>
+                <td><img src="{% get_url_picture photo.image %}" class="img-thumbnail w-50"
+                         alt="{% get_url_picture photo.image %}"></td>
+                <td>{{ photo.image }}</td>
+                <td><a href="{% url 'theatre:gallery-deletion' photo.pk %}">Удалить</a></td>
+                <td><a href="{% url 'theatre:gallery-restore' photo.pk %}">Восстановить</a></td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+
+    </div>
+</div>
+
+<!-- Navigation-->
+<!-- Header-->
+
+<!--</main>-->
+{% endblock %}

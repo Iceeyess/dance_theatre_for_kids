@@ -1,6 +1,7 @@
 from theatre.apps import TheatreConfig
 from django.urls import path
-from .views import index, schedule, TeacherListView, TeacherDetailView, news, about, ContactsListView, GalleryListView
+from .views import index, schedule, TeacherListView, TeacherDetailView, news, about, ContactsListView, GalleryListView, \
+    GalleryCreateView, get_mark_deletion, deletion_form, get_deletion, get_restore
 
 app_name = TheatreConfig.name
 
@@ -13,4 +14,10 @@ urlpatterns = [
     path('news/', news, name='news'),
     path('about/', about, name='about'),
     path('gallery/', GalleryListView.as_view(), name='gallery'),
+    path('gallery/creation/', GalleryCreateView.as_view(), name='gallery-creation'),
+    path('gallery/deletion/', deletion_form, name='gallery-deletion-form'),
+    path('gallery/deletion/<int:pk>', get_deletion, name='gallery-deletion'),
+    path('gallery/restore/<int:pk>', get_restore, name='gallery-restore'),
+    path('gallery/deletion_mark/<int:pk>', get_mark_deletion, name='gallery-deletion-mark'),
+
 ]
