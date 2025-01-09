@@ -1,0 +1,19 @@
+{% extends 'theatre/base.html' %}
+{% load static %}
+{% load path %}
+{% block content %}
+
+<!-- Navigation-->
+<!-- Header-->
+<div class="container">
+    <div class="row g-2 padding: 10px">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input name="gallery" type="file" size="50" accept="image/*" multiple>
+            <button type="submit">Загрузить</button>
+        </form>
+    </div>
+</div>
+<!--</main>-->
+{% endblock %}

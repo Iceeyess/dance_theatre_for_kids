@@ -16,6 +16,8 @@ from site import USER_BASE
 from django.conf.global_settings import AUTH_USER_MODEL
 from dotenv import load_dotenv
 
+from theatre.apps import TheatreConfig
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 dot_env = os.path.join(BASE_DIR, '.env')
@@ -60,7 +62,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, TheatreConfig.name, 'templates'),
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
