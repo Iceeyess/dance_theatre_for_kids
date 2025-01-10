@@ -162,6 +162,8 @@ class Gallery(models.Model):
     event =  models.ForeignKey(PlaybillSchedule, on_delete=models.CASCADE, verbose_name='мероприятие', related_name='gallery')
     image = models.ImageField(upload_to='image_gallery/', help_text='Вставьте фотографию', verbose_name='Фотография')
     mark_deletion = models.BooleanField(default=False)
+    creation_date = models.DateTimeField(auto_now_add=True, verbose_name='дата и время создания', **NULLABLE)
+    updated_date = models.DateTimeField(auto_now=True, verbose_name='дата и время обновления', **NULLABLE)
 
 
     def __str__(self):
