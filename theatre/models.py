@@ -167,7 +167,7 @@ class Gallery(models.Model):
 
 
     def __str__(self):
-        return self.event
+        return self.image
 
     class Meta:
         verbose_name = 'галерея'
