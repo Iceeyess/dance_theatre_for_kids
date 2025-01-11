@@ -97,7 +97,7 @@ class RegularClassSchedule(models.Model):
     price = models.FloatField(default=0, verbose_name='Стоимость', help_text='Введите стоимость услуги')
 
     def __str__(self):
-        return f'{self.event.name} - {self.time}'
+        return f'{self.event.name}'
 
     @property
     def weekday_names(self):
@@ -129,7 +129,7 @@ class PlaybillSchedule(models.Model):
     picture = models.ImageField(upload_to='playbill_event_pict/', verbose_name='Фотка мероприятия', **NULLABLE)
 
     def __str__(self):
-        return f'{self.event.name} - {self.date_time}'
+        return f'{self.event.name}'
 
     @property
     def teacher_names(self):
