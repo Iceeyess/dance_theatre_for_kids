@@ -13,11 +13,12 @@ urlpatterns = [
     path('contacts/', ContactsListView.as_view(), name='contacts'),
     path('news/', news, name='news'),
     path('about/', about, name='about'),
-    path('gallery/', GalleryListView.as_view(), name='gallery'),
-    path('gallery/creation/', GalleryCreateView.as_view(), name='gallery-creation'),
-    path('gallery/deletion/', deletion_form, name='gallery-deletion-form'),
-    path('gallery/deletion/<int:pk>', get_deletion, name='gallery-deletion'),
-    path('gallery/restore/<int:pk>', get_restore, name='gallery-restore'),
-    path('gallery/deletion_mark/<int:pk>', get_mark_deletion, name='gallery-deletion-mark'),
-
+    #  Галерея:
+    path('gallery/', GalleryListView.as_view(), name='gallery'),  # Галерея
+    path('gallery/creation/', GalleryCreateView.as_view(), name='gallery-creation'),  # Форма создания фото
+    path('gallery/deletion/', deletion_form, name='gallery-deletion-form'),  # Форма восстановления/удаления фото
+    path('gallery/deletion/<int:pk>', get_deletion, name='gallery-deletion'),  # Триггер на удаление фото
+    path('gallery/restore/<int:pk>', get_restore, name='gallery-restore'),  # Триггер на восстановление фото
+    path('gallery/deletion_mark/<int:pk>', get_mark_deletion, name='gallery-deletion-mark'),  # Пометка на удаление фото
+    #
 ]

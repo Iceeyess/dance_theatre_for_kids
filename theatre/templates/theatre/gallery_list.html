@@ -5,28 +5,41 @@
 
 <!-- Navigation-->
 <!-- Header-->
-
+<div class="col-3 m-3">
+<a href="{% url 'theatre:gallery-creation' %}" class="btn btn-dark align-center">Загрузить Фото</a>
+</div>
+{% for key, value in photos.items %}
 <div class="container">
-    <div class="col-3 m-3">
-        <a href="{% url 'theatre:gallery-creation' %}" class="btn btn-dark align-center">Загрузить Фото</a>
-    </div>
-    <div class="row g-2 padding: 10px">
+    <div class="row">
+        <h2 class="featurette-heading">{{ key }}</h2>
+        <p class="lead">Количество фотографий: {{ value|length }}</p>
 
-        {% for object in object_list %}
+        {% for object in value %}
         <div class="col-3">
-            <div class="card" style="width: 18rem;">
-                <img class="img-responsive" src="{% get_url_picture object.image %}"
-                     alt="{% get_url_picture object.image %}">
+            <div class="row g-2 padding: 10px">
+                <div class="card" style="width: 15rem;">
+                    <img class="card-img-top align-center" src="{% get_url_picture object.image %}"
+                         alt="{% get_url_picture object.image %}">
+                </div>
+                <a href="{% url 'theatre:gallery-deletion-mark' object.pk %}" class="badge bg-dark text-wrap" style="width: 6rem;">Пометить
+                    на
+                    удаление</a>
             </div>
-            <a href="{% url 'theatre:gallery-deletion-mark' object.pk %}" class="btn btn-dark align-center">Пометить на
-                удаление</a>
         </div>
-        {% endfor %}
+        {% if forloop.last %}
+        <hr>
+        {% endif %}
 
-    </div>
-        <div class="col-3 m-3">
-        <a href="{% url 'theatre:gallery-deletion-form' %}" class="btn btn-dark align-left width-50%">Удалить выбранные фото</a>
+        {% endfor %}
     </div>
 </div>
+{% endfor %}
+
+
+<div class="col-3 m-3">
+    <a href="{% url 'theatre:gallery-deletion-form' %}" class="btn btn-dark align-left width-50%">Удалить выбранные
+        фото</a>
+</div>
+
 <!--</main>-->
 {% endblock %}

@@ -17,7 +17,6 @@ from users.models import BankAccountOrganization
 # Create your views here.
 def index(request):
     header_name = {'header_name': topics['main'],
-                   'topics': topics,
                    'active_topics': active_topics}
     return render(request, os.path.join(TheatreConfig.name,'index.html'), context=header_name)
 
@@ -32,7 +31,6 @@ def schedule(request):
 class TeacherListView(ListView):
     model = Teacher
     extra_context = {'header_name': topics['teachers'],
-                     'topics': topics,
                      'active_topics': active_topics}
 
 
@@ -43,7 +41,7 @@ class TeacherDetailView(DetailView):
 class ContactsListView(ListView):
     model = BankAccountOrganization
     template_name = os.path.join(TheatreConfig.name, 'contact.html')
-    extra_context = dict(header_name=topics['contacts'], topics=topics, active_topics=active_topics)
+    extra_context = dict(header_name=topics['contacts'], active_topics=active_topics)
 
 def news():
     ...
@@ -53,10 +51,24 @@ def about():
 
 class GalleryListView(ListView):
     model = Gallery
-    extra_context = dict(header_name=topics['gallery'], topics=topics, active_topics=active_topics)
+    extra_context = dict(header_name=topics['gallery'], active_topics=active_topics)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        gallery_objects = Gallery.objects.filter(mark_deletion=False)
+        result_dict = dict()
+        for photo in gallery_objects:
+            event_name = photo.event.event.name
+            if event_name not in result_dict:
+                result_dict[event_name] = [photo]
+            else:
+                result_dict[event_name].append(photo)
+        context['photos'] = result_dict
+        return context
 
     def get_queryset(self):
         return Gallery.objects.filter(mark_deletion=False)
+
 
 
 class GalleryCreateView(FormView):
@@ -90,7 +102,7 @@ def get_mark_deletion(request, pk):
 
 def deletion_form(request):
     photos = Gallery.objects.filter(mark_deletion=True).order_by('pk')
-    data = dict(photos=photos, header_name=topics['gallery'], topics=topics, active_topics=active_topics)
+    data = dict(photos=photos, header_name=topics['gallery'], active_topics=active_topics)
     return render(request, os.path.join(TheatreConfig.name, 'gallery_confirm_delete.html'), context=data)
 
 def get_deletion(request, pk):
