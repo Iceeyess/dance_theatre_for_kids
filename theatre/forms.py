@@ -21,6 +21,7 @@ class MultipleFileField(forms.FileField):
 
 
 class PhotoForm(forms.Form):
+    """Форма для загрузки фоток"""
     event = forms.ModelChoiceField(queryset=PlaybillSchedule.objects.all(), widget=forms.Select, label='Мероприятие')
     image = MultipleFileField(label='Фотографии', required=True, help_text='Выберите фотографии для загрузки')
 
