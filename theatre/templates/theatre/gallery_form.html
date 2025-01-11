@@ -10,8 +10,7 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <input name="gallery" type="file" size="50" accept="image/*" multiple>
-            <button type="submit">Загрузить</button>
+            <button type="submit" class="btn btn-dark align-center">Загрузить</button>
         </form>
     </div>
 </div>

@@ -5,9 +5,11 @@ import random
 
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
-
+from django.views.generic.edit import FormView
 from config.settings import topics, active_topics
 from theatre.apps import TheatreConfig
+from theatre.forms import PhotoForm
+
 from theatre.models import RegularClassSchedule, PlaybillSchedule, Teacher, Gallery
 from users.models import BankAccountOrganization
 
@@ -15,7 +17,6 @@ from users.models import BankAccountOrganization
 # Create your views here.
 def index(request):
     header_name = {'header_name': topics['main'],
-                   'topics': topics,
                    'active_topics': active_topics}
     return render(request, os.path.join(TheatreConfig.name,'index.html'), context=header_name)
 
@@ -30,7 +31,6 @@ def schedule(request):
 class TeacherListView(ListView):
     model = Teacher
     extra_context = {'header_name': topics['teachers'],
-                     'topics': topics,
                      'active_topics': active_topics}
 
 
@@ -41,7 +41,7 @@ class TeacherDetailView(DetailView):
 class ContactsListView(ListView):
     model = BankAccountOrganization
     template_name = os.path.join(TheatreConfig.name, 'contact.html')
-    extra_context = dict(header_name=topics['contacts'], topics=topics, active_topics=active_topics)
+    extra_context = dict(header_name=topics['contacts'], active_topics=active_topics)
 
 def news():
     ...
@@ -51,22 +51,46 @@ def about():
 
 class GalleryListView(ListView):
     model = Gallery
-    extra_context = dict(header_name=topics['gallery'], topics=topics, active_topics=active_topics)
+    extra_context = dict(header_name=topics['gallery'], active_topics=active_topics)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        gallery_objects = Gallery.objects.filter(mark_deletion=False)
+        result_dict = dict()
+        for photo in gallery_objects:
+            event_name = photo.event.event.name
+            if event_name not in result_dict:
+                result_dict[event_name] = [photo]
+            else:
+                result_dict[event_name].append(photo)
+        context['photos'] = result_dict
+        return context
 
     def get_queryset(self):
         return Gallery.objects.filter(mark_deletion=False)
 
 
-class GalleryCreateView(CreateView):
-    model = Gallery
-    extra_context = dict(header_name=topics['gallery'], topics=topics, active_topics=active_topics)
-    fields = ('event', 'image', )
+
+class GalleryCreateView(FormView):
+    form_class = PhotoForm
     success_url = reverse_lazy('theatre:gallery')
+    extra_context = dict(header_name=topics['gallery'], topics=topics, active_topics=active_topics)
+    template_name = 'theatre/gallery_form.html'
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
     def form_valid(self, form):
-        new_image = form.save()
-        for item in self.request.FILES.getlist('gallery'):
-            Gallery.objects.create(image=item, event=new_image)
+        """Сохраняем несколько файлов с изображениями"""
+        images = form.cleaned_data['image']
+        event = form.cleaned_data.get('event')
+        for image in images:
+            Gallery.objects.create(image=image, event=event)
         return super().form_valid(form)
 
 
@@ -78,7 +102,7 @@ def get_mark_deletion(request, pk):
 
 def deletion_form(request):
     photos = Gallery.objects.filter(mark_deletion=True).order_by('pk')
-    data = dict(photos=photos, header_name=topics['gallery'], topics=topics, active_topics=active_topics)
+    data = dict(photos=photos, header_name=topics['gallery'], active_topics=active_topics)
     return render(request, os.path.join(TheatreConfig.name, 'gallery_confirm_delete.html'), context=data)
 
 def get_deletion(request, pk):
