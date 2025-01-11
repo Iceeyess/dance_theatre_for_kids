@@ -5,9 +5,13 @@
 
 <!-- Navigation-->
 <!-- Header-->
-<a href="{% url 'theatre:gallery-creation' %}" class="btn btn-dark align-center">Загрузить Фото</a>
+
 <div class="container">
+    <div class="col-3 m-3">
+        <a href="{% url 'theatre:gallery-creation' %}" class="btn btn-dark align-center">Загрузить Фото</a>
+    </div>
     <div class="row g-2 padding: 10px">
+
         {% for object in object_list %}
         <div class="col-3">
             <div class="card" style="width: 18rem;">
@@ -17,8 +21,10 @@
             <a href="{% url 'theatre:gallery-deletion-mark' object.pk %}" class="btn btn-dark align-center">Пометить на
                 удаление</a>
         </div>
-
         {% endfor %}
+
+    </div>
+        <div class="col-3 m-3">
         <a href="{% url 'theatre:gallery-deletion-form' %}" class="btn btn-dark align-left width-50%">Удалить выбранные фото</a>
     </div>
 </div>
