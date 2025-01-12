@@ -1,0 +1,18 @@
+{% extends 'theatre/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Регистрация</h2>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <input type="submit" value="Зарегистрировать" class="btn btn-dark btn-sm active">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

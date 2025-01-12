@@ -47,7 +47,7 @@
                 <div class="card" style="width: 15rem;">
                     <a href="{% url 'theatre:gallery-detail' object.pk %}">
                     <img class="single-video" src="{% static 'photo/system/no_video.jpg' %}" height="200"
-                         alt="{% static 'photo/system/no_video.jpg' %}">
+                         alt="{% url 'theatre:gallery-detail' object.pk %}">
                     </a>
                     <div class="row mx-n1">
                         <div class="col px-1"><a href="{% url 'theatre:gallery-deletion-mark' object.pk %}"

@@ -50,8 +50,14 @@
                        data-bs-toggle="dropdown" aria-expanded="false">Войти</a>
                     <ul class="dropdown-menu dropdown-menu-end"
                         aria-labelledby="navbarDropdownRegistrationOrSignIn">
-                        <li><a class="dropdown-item" href="portfolio-overview.html">Вход</a></li>
-                        <li><a class="dropdown-item" href="portfolio-item.html">Регистрация</a></li>
+                        {% if not request.user %}
+                        <li><a class="dropdown-item" href="{% url 'users:login' %}">Вход</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:registration' %}">Регистрация</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item">{{ request.user.username }}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выход</a></li>
+                        {% endif %}
                     </ul>
                 </li>
             </ul>

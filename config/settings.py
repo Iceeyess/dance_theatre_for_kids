@@ -139,6 +139,21 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL[1:])
 
 AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = 'theatre:index'
+LOGIN_URL = 'users:login'
+LOGOUT_REDIRECT_URL = 'theatre:index'
+
+
+#  email settings are hidden
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
+# settings for email sent in background without sending in fact.
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sending_emails_log')
 
 # Это для отображения темы в header.html
 topics = {
@@ -148,7 +163,10 @@ topics = {
     'contacts': 'Контакты',
     'news': 'Новости',
     'about': 'О нас',
-    'gallery': 'Галерея'
+    'gallery': 'Галерея',
+    'login': 'Вход',
+    'logout': 'Выход',
+    'register': 'Регистрация'
 }
 # Для перебора значений в header.html, чтобы выбрать активный раздел
 # Необходима четкая последовательность с value из вышеуказанного topics, а так же такое же количество топиков
@@ -158,5 +176,8 @@ active_topics = ['Главная страница',
                  'Педагоги',
                  'Контакты',
                  'Новости',
-                 'О нас'
+                 'О нас',
+                 'Вход',
+                 'Выход',
+                 'Регистрация',
                  ]
