@@ -22,15 +22,17 @@
                 <div class="card" style="width: 15rem;">
                     <a href="{% url 'theatre:gallery-detail' object.pk %}">
                         <img class="card-img-top align-center" src="{% get_url_picture object.photo %}"
-                         alt="{% get_url_picture object.photo %}">
+                             alt="{% get_url_picture object.photo %}">
                     </a>
                     <div class="row mx-n1">
+                        {% if request.user.is_superuser %}
                         <div class="col px-1"><a href="{% url 'theatre:gallery-deletion-mark' object.pk %}"
                                                  class="badge bg-dark text-wrap"
                                                  style="width: 6rem;">Пометить
                             на
                             удаление</a>
                         </div>
+                        {% endif %}
                         <div class="col px-1"><a href="{% url 'theatre:gallery-detail' object.pk %}"
                                                  class="badge bg-dark text-wrap"
                                                  style="width: 6rem;">Просмотр</a>
@@ -46,16 +48,19 @@
             <div class="row g-2 padding: 10px">
                 <div class="card" style="width: 15rem;">
                     <a href="{% url 'theatre:gallery-detail' object.pk %}">
-                    <img class="single-video" src="{% static 'photo/system/no_video.jpg' %}" height="200"
-                         alt="{% url 'theatre:gallery-detail' object.pk %}">
+                        <img class="single-video" src="{% static 'photo/system/no_video.jpg' %}" height="200"
+                             alt="{% url 'theatre:gallery-detail' object.pk %}">
                     </a>
+
                     <div class="row mx-n1">
+                        {% if request.user.is_superuser %}
                         <div class="col px-1"><a href="{% url 'theatre:gallery-deletion-mark' object.pk %}"
                                                  class="badge bg-dark text-wrap"
                                                  style="width: 6rem;">Пометить
                             на
                             удаление</a>
                         </div>
+                        {% endif %}
                         <div class="col px-1"><a href="{% url 'theatre:gallery-detail' object.pk %}"
                                                  class="badge bg-dark text-wrap"
                                                  style="width: 6rem;">Просмотр</a>

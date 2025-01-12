@@ -1,4 +1,8 @@
 import os
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .services import open_file
 
 from django.shortcuts import render, redirect
@@ -86,7 +90,7 @@ def get_streaming_video(request, pk: int):
 
 
 
-class GalleryCreateView(FormView):
+class GalleryCreateView(LoginRequiredMixin, FormView):
     form_class = PhotoForm
     success_url = reverse_lazy('theatre:gallery')
     extra_context = dict(header_name=topics['gallery'], topics=topics, active_topics=active_topics)
@@ -117,25 +121,41 @@ class GalleryCreateView(FormView):
         return super().form_valid(form)
 
 
+@login_required
 def get_mark_deletion(request, pk):
-    gallery_item = Gallery.objects.get(pk=pk)
-    gallery_item.mark_deletion = True
-    gallery_item.save()
-    return redirect('theatre:gallery')
+    if request.user.is_superuser:
+        gallery_item = Gallery.objects.get(pk=pk)
+        gallery_item.mark_deletion = True
+        gallery_item.save()
+        return redirect('theatre:gallery')
+    else:
+        return HttpResponseServerError('У вас недостаточно прав')
 
+
+@login_required
 def deletion_form(request):
-    files = Gallery.objects.filter(mark_deletion=True).order_by('pk')
-    data = dict(files=files, header_name=topics['gallery'], active_topics=active_topics)
-    return render(request, os.path.join(TheatreConfig.name, 'gallery_confirm_delete.html'), context=data)
+    if request.user.is_superuser:
+        files = Gallery.objects.filter(mark_deletion=True).order_by('pk')
+        data = dict(files=files, header_name=topics['gallery'], active_topics=active_topics)
+        return render(request, os.path.join(TheatreConfig.name, 'gallery_confirm_delete.html'), context=data)
+    else:
+        return HttpResponseServerError('У вас недостаточно прав')
 
+@login_required
 def get_deletion(request, pk):
     """Удаление объекта"""
-    Gallery.objects.get(pk=pk).delete()
-    return redirect('theatre:gallery-deletion-form')
+    if request.user.is_superuser:
+        Gallery.objects.get(pk=pk).delete()
+        return redirect('theatre:gallery-deletion-form')
+    else:
+        return HttpResponseServerError('У вас недостаточно прав')
 
 def get_restore(request, pk):
     """Восстановление объекта"""
-    photo = Gallery.objects.get(pk=pk)
-    photo.mark_deletion = False
-    photo.save()
-    return redirect('theatre:gallery-deletion-form')
+    if request.user.is_superuser:
+        photo = Gallery.objects.get(pk=pk)
+        photo.mark_deletion = False
+        photo.save()
+        return redirect('theatre:gallery-deletion-form')
+    else:
+        return HttpResponseServerError('У вас недостаточно прав')

@@ -141,7 +141,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL[1:])
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'theatre:index'
 LOGIN_URL = 'users:login'
-LOGOUT_REDIRECT_URL = 'theatre:index'
+LOGOUT_REDIRECT_URL = 'users:login'
 
 
 #  email settings are hidden

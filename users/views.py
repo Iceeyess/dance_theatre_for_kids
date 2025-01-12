@@ -1,4 +1,6 @@
 import secrets
+
+from django.contrib.auth import logout
 from django.urls import reverse
 from django.contrib.auth.views import LoginView
 from django.shortcuts import get_object_or_404, redirect
@@ -35,6 +37,10 @@ class UserLoginView(LoginView):
     template_name = 'users/login.html'
     extra_context = {'header_name': topics['login'],
                      'active_topics': active_topics}
+
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('theatre:index'))
 
 
 def email_verification(request, token):
