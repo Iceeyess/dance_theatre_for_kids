@@ -123,6 +123,7 @@ class GalleryCreateView(LoginRequiredMixin, FormView):
 
 @login_required
 def get_mark_deletion(request, pk):
+    """Сделать пометку об удалении"""
     if request.user.is_superuser:
         gallery_item = Gallery.objects.get(pk=pk)
         gallery_item.mark_deletion = True
@@ -134,12 +135,14 @@ def get_mark_deletion(request, pk):
 
 @login_required
 def deletion_form(request):
+    """Форма подтверждения удаления или восстановления"""
     if request.user.is_superuser:
         files = Gallery.objects.filter(mark_deletion=True).order_by('pk')
         data = dict(files=files, header_name=topics['gallery'], active_topics=active_topics)
         return render(request, os.path.join(TheatreConfig.name, 'gallery_confirm_delete.html'), context=data)
     else:
         return HttpResponseServerError('У вас недостаточно прав')
+
 
 @login_required
 def get_deletion(request, pk):
@@ -150,6 +153,8 @@ def get_deletion(request, pk):
     else:
         return HttpResponseServerError('У вас недостаточно прав')
 
+
+@login_required
 def get_restore(request, pk):
     """Восстановление объекта"""
     if request.user.is_superuser:
