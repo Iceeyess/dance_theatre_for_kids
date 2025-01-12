@@ -2,7 +2,7 @@ import os
 
 from django.shortcuts import render, redirect
 import random
-
+from django.http.response import HttpResponseServerError, HttpResponseBadRequest
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from django.views.generic.edit import FormView
@@ -69,6 +69,10 @@ class GalleryListView(ListView):
     def get_queryset(self):
         return Gallery.objects.filter(mark_deletion=False)
 
+class GalleryDetailView(DetailView):
+    model = Gallery
+    extra_context = dict(header_name=topics['gallery'], active_topics=active_topics)
+
 
 
 class GalleryCreateView(FormView):
@@ -86,11 +90,19 @@ class GalleryCreateView(FormView):
             return self.form_invalid(form)
 
     def form_valid(self, form):
-        """Сохраняем несколько файлов с изображениями"""
-        images = form.cleaned_data['image']
+        """Сохраняем несколько файлов с изображениями/видео"""
+        files = form.cleaned_data['file']
         event = form.cleaned_data.get('event')
-        for image in images:
-            Gallery.objects.create(image=image, event=event)
+        video_formats = ('.mp4', '.avi', '.mpg', '.mov', '.wmv', '.wma', '.mkv', '.flv', '.f4v', '.webm', '.avchd',
+                         '.mpeg', '.3gp', '.m4v')
+        image_formats = ('.jpg', '.jpeg', '.png', '.gif', '.tiff', '.bmp', '.eps', '.svg', '.webp')
+        for file in files:
+            if file.name[file.name.rfind('.'): ].lower() in video_formats:
+                Gallery.objects.create(video=file, event=event)
+            elif file.name[file.name.rfind('.'): ].lower() in image_formats:
+                Gallery.objects.create(photo=file, event=event)
+            else:
+                return HttpResponseBadRequest('Неподдерживаемый формат данных')
         return super().form_valid(form)
 
 
@@ -101,8 +113,8 @@ def get_mark_deletion(request, pk):
     return redirect('theatre:gallery')
 
 def deletion_form(request):
-    photos = Gallery.objects.filter(mark_deletion=True).order_by('pk')
-    data = dict(photos=photos, header_name=topics['gallery'], active_topics=active_topics)
+    files = Gallery.objects.filter(mark_deletion=True).order_by('pk')
+    data = dict(files=files, header_name=topics['gallery'], active_topics=active_topics)
     return render(request, os.path.join(TheatreConfig.name, 'gallery_confirm_delete.html'), context=data)
 
 def get_deletion(request, pk):

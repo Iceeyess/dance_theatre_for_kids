@@ -6,26 +6,52 @@
 <!-- Navigation-->
 <!-- Header-->
 <div class="col-3 m-3">
-<a href="{% url 'theatre:gallery-creation' %}" class="btn btn-dark align-center">Загрузить Фото</a>
+    <a href="{% url 'theatre:gallery-creation' %}" class="btn btn-dark align-center">Загрузить медиафайлы</a>
 </div>
 {% for key, value in photos.items %}
 <div class="container">
     <div class="row">
         <h2 class="featurette-heading">{{ key }}</h2>
-        <p class="lead">Количество фотографий: {{ value|length }}</p>
+        <p class="lead">Количество медиафайлов: {{ value|length }}</p>
 
         {% for object in value %}
+
+        {% if object.photo %}
         <div class="col-3">
             <div class="row g-2 padding: 10px">
                 <div class="card" style="width: 15rem;">
-                    <img class="card-img-top align-center" src="{% get_url_picture object.image %}"
-                         alt="{% get_url_picture object.image %}">
+                    <img class="card-img-top align-center" src="{% get_url_picture object.photo %}"
+                         alt="{% get_url_picture object.photo %}">
+                    <a href="{% url 'theatre:gallery-deletion-mark' object.pk %}" class="badge bg-dark text-wrap"
+                       style="width: 6rem;">Пометить
+                        на
+                        удаление</a>
+                    <a href="{% url 'theatre:gallery-detail' object.pk %}" class="badge bg-dark text-wrap"
+                       style="width: 6rem;">Просмотр</a>
                 </div>
-                <a href="{% url 'theatre:gallery-deletion-mark' object.pk %}" class="badge bg-dark text-wrap" style="width: 6rem;">Пометить
-                    на
-                    удаление</a>
+
             </div>
         </div>
+        {% elif object.video %}
+        <div class="col-3">
+            <div class="row g-2 padding: 10px">
+                <div class="card" style="width: 15rem;">
+                    <img class="single-video" src="{% static 'photo/system/no_video.jpg' %}" height="200"
+                         alt="{% static 'photo/system/no_video.jpg' %}">
+                    <div class="row mg-5">
+                        <a href="{% url 'theatre:gallery-deletion-mark' object.pk %}" class="badge bg-dark text-wrap"
+                           style="width: 6rem;">Пометить
+                            на
+                            удаление</a>
+                        <a href="{% url 'theatre:gallery-detail' object.pk %}" class="badge bg-dark text-wrap"
+                           style="width: 6rem;">Просмотр</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% endif %}
+
         {% if forloop.last %}
         <hr>
         {% endif %}
@@ -37,8 +63,8 @@
 
 
 <div class="col-3 m-3">
-    <a href="{% url 'theatre:gallery-deletion-form' %}" class="btn btn-dark align-left width-50%">Удалить выбранные
-        фото</a>
+    <a href="{% url 'theatre:gallery-deletion-form' %}" class="btn btn-dark align-left width-50%">Удалить
+        медиафайлы</a>
 </div>
 
 <!--</main>-->

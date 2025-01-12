@@ -89,7 +89,7 @@ class PlaybillScheduleAdmin(RegularClassScheduleAdmin):
 @admin.register(Gallery)
 class GalleryAdmin(admin.ModelAdmin):
     """Класс для загрузки фотографий с грандиозных мероприятий"""
-    list_display = ('event', 'image', )
-    list_display_links = ('event', 'image', )
+    list_display = ('event', 'photo', 'video', )
+    list_display_links = ('event', 'photo', 'video', )
     list_filter = ('event', )
 
