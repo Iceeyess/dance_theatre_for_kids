@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.db.models import DO_NOTHING
 
@@ -149,7 +150,8 @@ class News:
     """Класс новостей"""
     name = models.CharField(max_length=100, verbose_name='новости', help_text='Введите название новости')
     description = models.TextField()
-    image = models.ImageField(upload_to='news_images', verbose_name='Аварка новости', help_text='Вставьте аватарку для новости')
+    image = models.ImageField(upload_to='news_images', verbose_name='Аварка новости',
+                              help_text='Вставьте аватарку для новости')
 
     def __str__(self):
         return self.name
@@ -158,13 +160,19 @@ class News:
         verbose_name = 'новость'
         verbose_name_plural = 'новости'
 
-class Gallery(models.Model):
-    event =  models.ForeignKey(PlaybillSchedule, on_delete=models.CASCADE, verbose_name='мероприятие', related_name='gallery')
-    image = models.ImageField(upload_to='image_gallery/', help_text='Вставьте фотографию', verbose_name='Фотография')
-    mark_deletion = models.BooleanField(default=False)
-    creation_date = models.DateTimeField(auto_now_add=True, verbose_name='дата и время создания', **NULLABLE)
-    updated_date = models.DateTimeField(auto_now=True, verbose_name='дата и время обновления', **NULLABLE)
 
+class Gallery(models.Model):
+    event = models.ForeignKey(PlaybillSchedule, on_delete=models.CASCADE, verbose_name='мероприятие',
+                              related_name='gallery')
+    photo = models.ImageField(upload_to='image_gallery/', help_text='Вставьте фотографию', verbose_name='Фотография',
+                              **NULLABLE)
+    video = models.FileField(upload_to='video_gallery/', help_text='Вставьте видео', verbose_name='Видеофайл',
+                             validators=[FileExtensionValidator(allowed_extensions=(
+                             '.mp4', '.avi', '.mpg', '.mov', '.wmv', '.wma', '.mkv', '.flv', '.f4v', '.webm', '.avchd',
+                             '.mpeg', '.3gp', '.m4v'))], **NULLABLE)
+    mark_deletion = models.BooleanField(default=False)
+    creation_datetime = models.DateTimeField(auto_now_add=True, verbose_name='дата и время создания', **NULLABLE)
+    updated_datetime = models.DateTimeField(auto_now=True, verbose_name='дата и время обновления', **NULLABLE)
 
     def __str__(self):
         return str(self.event)

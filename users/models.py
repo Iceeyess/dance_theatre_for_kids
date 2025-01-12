@@ -85,15 +85,14 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name='электронная почта', help_text='Введите электронную почту')
     username = models.CharField(unique=True, max_length=150, verbose_name='имя пользователя',
                                 help_text='Введите имя пользователя')
-    avatar = models.ImageField(verbose_name='фотография', help_text='вложите файл с фотографией',
-                               upload_to='users/', **NULLABLE)
     phone = models.CharField(max_length=10, unique=True, verbose_name='телефонный номер',
                                         help_text='Введите номер телефона')
     is_active = models.BooleanField(default=False, verbose_name='статус пользователя',
                                     help_text='Пользователь активен?')
+    token = models.CharField(max_length=100, verbose_name='Токен', **NULLABLE)
     #  Переопределили поле для входа
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'password']
+    REQUIRED_FIELDS = ['username', 'password', 'first_name', 'last_name', ]
 
     def __str__(self):
         return f'Email: {self.email}, Username: {self.username}'

@@ -1,0 +1,43 @@
+{% extends 'theatre/base.html' %}
+{% load static %}
+{% load path %}
+{% block content %}
+<!-- Navigation-->
+<!-- Header-->
+
+{% if object.photo %}
+<hr class="featurette-divider">
+
+<div class="row featurette">
+    <div class="col-md-7 order-md-2">
+        <p class="lead">Название мероприятия: {{ object.event.event.name }}</p>
+        <p class="text">Название фото: {{ object.photo }}</p>
+        <img src="{% get_url_picture object.photo %}" class="card-img-top" alt="photo">
+    </div>
+</div>
+{% elif object.video %}
+<hr class="featurette-divider">
+
+<div class="row featurette">
+    <div class="col-md-7 order-md-2">
+        <p class="lead">Название мероприятия: {{ object.event.event.name }}</p>
+        <p class="text">Название видео: {{ object.video }}</p>
+        <video
+              id="my-video"
+              class="video-js"
+              controls
+              preload="auto"
+              width="320"
+              height="240"
+              data-setup="{}"
+          >
+            <source src="{% url 'theatre:gallery-stream' object.id %}" type="video/mp4"/>
+          </video>
+
+    </div>
+</div>
+
+{% endif %}
+
+<!--</main>-->
+{% endblock %}
