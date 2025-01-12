@@ -11,6 +11,7 @@ def ranged(
         end: int = None,
         block_size: int = 8192,
 ) -> Generator[bytes, None, None]:
+    """Сервис для видео-потока"""
     consumed = 0
 
     file.seek(start)
@@ -29,6 +30,7 @@ def ranged(
 
 
 def open_file(request, video_pk: int) -> tuple:
+    """Сервис для видео-потока"""
     _video = get_object_or_404(Gallery, pk=video_pk)
 
     path = Path(_video.video.path)
