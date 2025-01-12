@@ -5,9 +5,11 @@
 
 <!-- Navigation-->
 <!-- Header-->
+{% if request.user.is_superuser %}
 <div class="col-3 m-3">
     <a href="{% url 'theatre:gallery-creation' %}" class="btn btn-dark align-center">Загрузить медиафайлы</a>
 </div>
+{% endif %}
 {% for key, value in photos.items %}
 <div class="container">
     <div class="row">
@@ -82,11 +84,12 @@
 </div>
 {% endfor %}
 
-
+{% if request.user.is_superuser %}
 <div class="col-3 m-3">
     <a href="{% url 'theatre:gallery-deletion-form' %}" class="btn btn-dark align-left width-50%">Удалить
         медиафайлы</a>
 </div>
+{% endif %}
 
 <!--</main>-->
 {% endblock %}

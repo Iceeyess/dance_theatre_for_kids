@@ -3,7 +3,7 @@ import os
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .services import open_file
+from .services import open_file, UserPassThroughTestMixin
 
 from django.shortcuts import render, redirect
 import random
@@ -90,7 +90,7 @@ def get_streaming_video(request, pk: int):
 
 
 
-class GalleryCreateView(LoginRequiredMixin, FormView):
+class GalleryCreateView(LoginRequiredMixin, UserPassThroughTestMixin, FormView):
     form_class = PhotoForm
     success_url = reverse_lazy('theatre:gallery')
     extra_context = dict(header_name=topics['gallery'], topics=topics, active_topics=active_topics)

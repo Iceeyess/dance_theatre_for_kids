@@ -1,5 +1,7 @@
 from pathlib import Path
 from typing import IO, Generator
+
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 
 from .models import Gallery
@@ -53,3 +55,12 @@ def open_file(request, video_pk: int) -> tuple:
         content_range = f'bytes {range_start}-{range_end}/{file_size}'
 
     return file, status_code, content_length, content_range
+
+
+class UserPassThroughTestMixin(UserPassesTestMixin):
+    """Переопределенный класс для следующих приложений: clients, mailing, communications.
+    Данный класс для проверки представлений на соответствие пользователя"""
+
+    def test_func(self):
+        # Если юзер - superuser, то может редактировать сообщение
+        return self.request.user.is_superuser
