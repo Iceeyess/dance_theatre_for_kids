@@ -1,8 +1,9 @@
 import os
+from .services import open_file
 
 from django.shortcuts import render, redirect
 import random
-from django.http.response import HttpResponseServerError, HttpResponseBadRequest
+from django.http.response import HttpResponseServerError, HttpResponseBadRequest, StreamingHttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from django.views.generic.edit import FormView
@@ -72,6 +73,16 @@ class GalleryListView(ListView):
 class GalleryDetailView(DetailView):
     model = Gallery
     extra_context = dict(header_name=topics['gallery'], active_topics=active_topics)
+
+def get_streaming_video(request, pk: int):
+    file, status_code, content_length, content_range = open_file(request, pk)
+    response = StreamingHttpResponse(file, status=status_code, content_type='video/mp4')
+
+    response['Accept-Ranges'] = 'bytes'
+    response['Content-Length'] = str(content_length)
+    response['Cache-Control'] = 'no-cache'
+    response['Content-Range'] = content_range
+    return response
 
 
 

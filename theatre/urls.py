@@ -1,7 +1,8 @@
 from theatre.apps import TheatreConfig
 from django.urls import path
 from .views import index, schedule, TeacherListView, TeacherDetailView, news, about, ContactsListView, GalleryListView, \
-    GalleryCreateView, get_mark_deletion, deletion_form, get_deletion, get_restore, GalleryDetailView
+    GalleryCreateView, get_mark_deletion, deletion_form, get_deletion, get_restore, GalleryDetailView, \
+    get_streaming_video
 
 app_name = TheatreConfig.name
 
@@ -20,6 +21,7 @@ urlpatterns = [
     path('gallery/deletion/<int:pk>', get_deletion, name='gallery-deletion'),  # Триггер на удаление фото/видео
     path('gallery/restore/<int:pk>', get_restore, name='gallery-restore'),  # Триггер на восстановление фото/видео
     path('gallery/deletion_mark/<int:pk>', get_mark_deletion, name='gallery-deletion-mark'),  # Пометка на удаление фото/видео
-    path('gallery/detail/<int:pk>', GalleryDetailView.as_view(), name='gallery-detail')  # Детализация фото/видео
+    path('gallery/detail/<int:pk>', GalleryDetailView.as_view(), name='gallery-detail'),  # Детализация фото/видео
+    path('gallery/detail/stream/<int:pk>', get_streaming_video, name='gallery-stream'),  # для потокового видео
     #
 ]
