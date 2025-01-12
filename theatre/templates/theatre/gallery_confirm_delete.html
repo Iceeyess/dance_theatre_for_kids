@@ -30,8 +30,8 @@
             {% elif file.video %}
             <tr class="table-light">
                 <th scope="row">{{ file.pk }}</th>
-                <td><img src="{% get_url_picture file.video %}" class="img-thumbnail w-50"
-                         alt="{% get_url_picture file.video %}"></td>
+                <td><img src="{% static 'photo/system/no_video.jpg' %}" class="img-thumbnail w-30"
+                         alt="{% static 'photo/system/no_video.jpg' %}"></td>
                 <td>{{ file.video }}</td>
                 <td><a href="{% url 'theatre:gallery-deletion' file.pk %}">Удалить</a></td>
                 <td><a href="{% url 'theatre:gallery-restore' file.pk %}">Восстановить</a></td>
