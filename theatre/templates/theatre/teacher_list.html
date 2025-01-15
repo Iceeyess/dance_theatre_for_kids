@@ -6,14 +6,14 @@
 <!-- Navigation-->
 <!-- Header-->
 <div class="container">
-    <div class="row g-2 padding: 10px">
+    <div class="row">
         {% for object in object_list %}
-        <div class="col-3">
-            <div class="card" style="width: 18rem;">
+        <div class="col-md-3">
+            <div class="card" style="height: auto;">
                 {% if object.image %}
-                <a href="{% url 'theatre:teachers_detail' object.pk %}"><img src="{% get_url_picture object.image %}" class="card-img-top" alt="{{ object.get_full_name }}"></a>
+                <a href="{% url 'theatre:teachers_detail' object.pk %}"><img src="{% get_url_picture object.image %}" class="card-img-top img-fluid" alt="{{ object.get_full_name }}" style="height: auto; object-fit: cover;"></a>
                 {% else %}
-                <a href="{% url 'theatre:teachers_detail' object.pk %}"><img src="{% static 'photo/system/no_teacher.jpg' %}" class="card-img-top" alt="{{ object.get_full_name }}"></a>
+                <a href="{% url 'theatre:teachers_detail' object.pk %}"><img src="{% static 'photo/system/no_teacher.jpg' %}" class="card-img-top img-fluid" alt="{{ object.get_full_name }}" style="height: auto; object-fit: cover;"></a>
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ object.get_full_name }}</h5>
