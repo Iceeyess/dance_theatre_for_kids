@@ -6,14 +6,14 @@
 <!-- Navigation-->
 <!-- Header-->
 <div class="container">
-    <div class="row g-2 padding: 10px">
+    <div class="row">
         {% for event in events %}
-            <div class="col-3">
-                <div class="card" style="width: 18rem;">
+            <div class="col-md-3">
+                <div class="card" style="height: auto;">
                     {% if event.picture %}
-                    <img src="{% get_url_picture event.picture %}" class="card-img-top" alt="{% get_url_picture event.picture %}">
+                    <img src="{% get_url_picture event.picture %}" class="card-img-top img-fluid" alt="{% get_url_picture event.picture %}" style="height: auto; object-fit: cover;">
                     {% else %}
-                    <img src="{% static 'photo/system/no_picture.jpg' %}" class="card-img-top" alt="photo/system/no_picture.jpg'">
+                    <img src="{% static 'photo/system/no_picture.jpg' %}" class="card-img-top img-fluid" alt="photo/system/no_picture.jpg'" style="height: auto; object-fit: cover;">
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ event.event }}</h5>

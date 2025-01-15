@@ -19,11 +19,12 @@
         {% for object in value %}
 
         {% if object.photo %}
-        <div class="col-3">
-            <div class="row g-2 padding: 10px">
-                <div class="card" style="width: 15rem;">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="card" style="height: auto;">
                     <a href="{% url 'theatre:gallery-detail' object.pk %}">
-                        <img class="card-img-top align-center" src="{% get_url_picture object.photo %}"
+                        <img class="card-img-top img-fluid" src="{% get_url_picture object.photo %}"
+                             style="height: auto; object-fit: cover;"
                              alt="{% get_url_picture object.photo %}">
                     </a>
                     <div class="row mx-n1">
@@ -46,9 +47,9 @@
             </div>
         </div>
         {% elif object.video %}
-        <div class="col-3">
-            <div class="row g-2 padding: 10px">
-                <div class="card" style="width: 15rem;">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="card-img-top img-fluid" style="height: auto; object-fit: cover;">
                     <a href="{% url 'theatre:gallery-detail' object.pk %}">
                         <img class="single-video" src="{% static 'photo/system/no_video.jpg' %}" height="200"
                              alt="{% url 'theatre:gallery-detail' object.pk %}">
