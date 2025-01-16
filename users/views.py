@@ -2,7 +2,7 @@ import secrets
 
 from django.contrib.auth import logout
 from django.urls import reverse
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetConfirmView
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView
@@ -53,3 +53,16 @@ def email_verification(request, token):
 
 class ProfileView(DetailView):
     model = User
+
+
+class UserPasswordResetConfirm(PasswordResetConfirmView):
+    template_name = 'users/reset/password_reset_confirm.html'
+    success_url = reverse_lazy('users:password-reset-complete')
+    extra_context = {'header_name': topics['login'],
+                     'active_topics': active_topics}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['uidb64'] = self.kwargs.get('uidb64')
+        context['token'] = self.kwargs.get('token')
+        return context
