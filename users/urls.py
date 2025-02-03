@@ -15,7 +15,7 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='login'),
     # path('logout/', LogoutView.as_view(), name='logout'),
     path('logout/', user_logout, name='logout'),
-    path('profile/', ProfileView.as_view(), name='profile'),
+    path('profile/<int:pk>/', ProfileView.as_view(), name='profile'),
     path('registration-email-confirm/<str:token>/', email_verification, name='email-confirm'),
     # Восстановление пароля
     path('password-reset', PasswordResetView.as_view(template_name='users/reset/password_reset_form.html',
