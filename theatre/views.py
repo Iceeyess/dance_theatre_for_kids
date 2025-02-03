@@ -48,11 +48,15 @@ class ContactsListView(ListView):
     template_name = os.path.join(TheatreConfig.name, 'contact.html')
     extra_context = dict(header_name=topics['contacts'], active_topics=active_topics)
 
-def news():
-    ...
+def news(request):
+    header_name = {'header_name': topics['news'],
+                   'active_topics': active_topics}
+    return render(request, 'theatre/news.html', context=header_name)
 
-def about():
-    ...
+def about(request):
+    header_name = {'header_name': topics['about'],
+                   'active_topics': active_topics}
+    return render(request, 'theatre/about.html', context=header_name)
 
 class GalleryListView(ListView):
     model = Gallery
