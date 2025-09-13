@@ -2,30 +2,35 @@
 {% load static %}
 {% block content %}
 
-<!-- Navigation-->
-<!-- Header-->
+<!-- Текстовый блок на основном фоне -->
+<div class="container px-5 bg-dark">
+    <div class="row py-5">
+        <div class="col-12 text-center">
+            {% if not request.user.username %}
+            <h1 class="display-5 fw-bolder text-white mb-2">Записаться на занятия</h1>
+            <p class="lead fw-normal text-white-50 mb-4">Прежде чем производить запись, зарегистрируйтесь</p>
+            <div class="d-grid gap-3 d-sm-flex justify-content-center">
+                <a class="btn btn-light btn-lg px-4 me-sm-3" href="{% url 'users:registration' %}">Регистрация</a>
+                <a class="btn btn-light btn-lg px-4" href="{% url 'users:login' %}">Вход в ЛК</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
+<!-- Фоновое изображение -->
 <div class="container px-5 bg-dark w-100">
     <div class="row bg-dark">
         <header class="bg-image" style="background-image: url('{% static 'photo/system/main_theme.jpg' %}');
     background-size: 100%;
     background-position: left top;
+    background-repeat: no-repeat;
     height: 1080px;
     weight: 1080px">
             <div class="container px-5">
                 <div class="row gx-5 align-items-center justify-content-center">
                     <div class="col-lg-8 col-xl-7 col-xxl-6">
-                        <div class="my-5 text-center text-xl-start">
-                            {% if not request.user.username %}
-                            <h1 class="display-5 fw-bolder text-white mb-2">Записаться на занятия</h1>
-                            <p class="lead fw-normal text-white-50 mb-4">Прежде чем производить запись,
-                                зарегистрируйтесь</p>
-                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                <a class="btn btn-light btn-lg px-4 me-sm-3" href="{% url 'users:registration' %}">Регистрация</a>
-                                <a class="btn btn-light btn-lg px-4" href="{% url 'users:login' %}">Вход в ЛК</a>
-                            </div>
-                            {% endif %}
-                        </div>
+                        <!-- Пустой блок для сохранения структуры -->
                     </div>
                 </div>
             </div>
