@@ -148,9 +148,9 @@ LOGOUT_REDIRECT_URL = 'users:login'
 
 
 #  email settings through either smtp protocol or local file system
-sending_emails_smtp = False
+SENDING_EMAIL_FLAG = os.getenv('SENDING_EMAIL_FLAG')
 
-if sending_emails_smtp:
+if SENDING_EMAIL_FLAG:
     EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
     EMAIL_HOST = os.getenv('EMAIL_HOST')
     EMAIL_PORT = os.getenv('EMAIL_PORT')
